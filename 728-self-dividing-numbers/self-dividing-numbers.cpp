@@ -12,8 +12,6 @@ public:
             while(it != 0)
             {
                 int n = it % 10;
-
-                // If digit is zero or the number is not divisible by this digit
                 if(n == 0 || i % n != 0)
                 {
                     isSelfDividing = false;
@@ -23,7 +21,6 @@ public:
                 it = it / 10;
             }
 
-            // If the number is self-dividing, add it to the result
             if(isSelfDividing)
             {
                 res.push_back(i);
