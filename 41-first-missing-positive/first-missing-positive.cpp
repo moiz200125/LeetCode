@@ -1,23 +1,26 @@
-#include <unordered_set>
+#include <vector>
+using namespace std;
 
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
-       unordered_set<int> mySet;
-
-       // Insert all elements of the vector into the set
-        for (int num : nums) {
-            if (num > 0) 
-            { // We only care about positive integers
-                mySet.insert(num);
+        int n = nums.size();
+        
+        // Step 1: Place each number in its correct position (i.e., nums[i] should be at nums[nums[i] - 1])
+        for (int i = 0; i < n; i++) {
+            while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
+                swap(nums[i], nums[nums[i] - 1]);
             }
         }
-
-        int missing = 1;
-        while (mySet.find(missing) != mySet.end()) {
-            missing++;
+        
+        // Step 2: Find the first index where nums[i] != i + 1
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != i + 1) {
+                return i + 1;
+            }
         }
-
-        return missing; // Return the first missing positive intege
+        
+        // Step 3: If all indices are correct, return n + 1
+        return n + 1;
     }
 };
